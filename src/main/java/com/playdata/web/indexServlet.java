@@ -19,7 +19,7 @@ public class indexServlet extends HttpServlet {
         BoardService boardService = new BoardService();
         List<BoardDto> boards = boardService.getBoards(request);
         request.setAttribute("boards",boards);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
         dispatcher.forward(request,response);
     }
 }

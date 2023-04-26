@@ -29,7 +29,7 @@
                 <tr>
                     <td>${board.id}</td>
                     <td>
-                        <a href="view.jsp?id=${board.id}">
+                        <a href="view?id=${board.id}">
                             ${board.title}
                         </a>
                     </td>

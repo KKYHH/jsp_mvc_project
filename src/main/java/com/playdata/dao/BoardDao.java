@@ -6,10 +6,7 @@ import com.playdata.util.DbUtil;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.JdbcRowSet;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +38,27 @@ public class BoardDao {
             e.printStackTrace();
         }
         return boardList;
+    }
+
+    public BoardDto selectById(String id, HttpServletRequest request) {
+        Connection conn = (Connection) request.getServletContext().getAttribute("conn");
+        BoardDto boardDto = null;
+        String sql = "SELECT * FROM board WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,Integer.parseInt(id));
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+            boardDto = BoardDto.builder()
+                    .id(rs.getInt("id"))
+                    .author(rs.getString("author"))
+                    .title(rs.getString("title"))
+                    .content(rs.getString("content"))
+                    .created_at(rs.getString("created_at"))
+                    .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return boardDto;
     }
 }
